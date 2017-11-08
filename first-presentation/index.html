@@ -49,9 +49,9 @@
                     </script>
                 </section>
                 
-                <section data-markdown>
-                    <script type="text/template" style="text-align:left">
-                        # Intuitions
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Intuitions
 
                         * Train an agent for the worst case using a destabilizing adversary.
                             * Drawn from friction and mass as something which exerts a disturbing force.
@@ -139,16 +139,15 @@
                         The adversary on the other hand, tries to minimize the above.
                     </script>
                 </section>
-                <section data-markdown style="text-align:left">
-                    <script type="text/template">
-                        ## Algorithm
 
-
-                    </script>
+                <section style="text-align:left">
+                    <h2> Algorithm </h2>
+                    <img src="images/algo.png" alt="algorithm" width="50%"> </img>
                 </section>
+
                 <section data-markdown style="text-align:left">
                     <script type="text/template">
-                    ## On Policy Optimization
+                    ## Policy Optimization
 
                     * Directly optimize policy instead of $V(s)$ or $Q(s, a)$.
                     * Policy Optimization: State $\rightarrow$ Action Distribution
@@ -205,9 +204,17 @@
                 <section style="text-align:left">
                     <h4> Example </h4>
 
-                    Inverted Pendulum. One 2D force as action.
+                    <p> Inverted Pendulum. One 2D force as action. </p>
 
                     <img src="images/inverted_pendulum.png" alt="inverted-pendulum"></img>
+
+
+                </section>
+                <section style="text-align:left">
+                    <h4> Example </h4>
+
+                    <p> Other examples </p>
+                    <img src="images/other_examples.png" alt="other examples"></img>
 
                 </section>
                 <section data-markdown style="text-align:left">
@@ -215,20 +222,37 @@
                         ## Implementation
                         ### Outputs
 
-                        In an episode, when we apply an action on the environment, we get:
-
-                        * The state of the environment
-                            * Velocities, Positions which determine the state.
-                            * Reward for the agent - protagonist or adversary is formulated based on state and episode.
-                                * Height
-                                * Distance covered.
-                                * Time staying alive.
+                        In an episode, from the environment, we obtain
+                        * Velocities, Positions which determine the state.
+                        * Reward for the agent - protagonist or adversary is formulated based on state and episode.
+                            * Height
+                            * Distance covered.
+                            * Time staying alive.
                     </script>
                 </section>
                 <section data-markdown style="text-align:left">
                     <script type="text/template">
                         ## Evaluation
 
+                        ##### average reward vs iterations
+                        * Doesn't indicate how robust the policy.
+                        * But can be used to benchmark against baselines.
+
+                        ---
+
+                        ##### average reward vs percentile trained policies
+                        * Indicates robustness. 
+                        * Better rewards over lesser percentiles, more robust learner.
+
+                    </script>
+                </section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Evaluation
+
+                        #### Correlate with known parameters.
+                        * Mass vs Rewards
+                        * Friction vs Rewards
                     </script>
                 </section>
 			</div>

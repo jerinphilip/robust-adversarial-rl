@@ -25,7 +25,7 @@
 		<div class="reveal">
 			<div class="slides">
 				<section style="text-align:left">
-                    <h4> Robust Adversarial Reiforcement Learning </h4>
+                    <h4> Robust Adversarial Reinforcement Learning </h4>
                     <h5>Topics in Machine Learning,  <em>Monsoon '17</em></h5>
                     <p>Course Project</p>
 					<p>
@@ -199,6 +199,19 @@
                             * Forces have dimensions: 1D, 2D, 3D.
                             * Concatenation of all the forces is the action.
                             * A distribution predicting the action vector is learnt.
+
+                    </script>
+                </section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Implementation
+                        ### Inputs
+
+                        A neural network models the required predictive distribution of $\pi(a |s) $.
+
+                        We train based on the rewards the agent obtain, using Policy Optimizer.
+
+                        Thus for a given state $s$ from environment, we get an action, $a$.
                     </script>
                 </section>
                 <section style="text-align:left">

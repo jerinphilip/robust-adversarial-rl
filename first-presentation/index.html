@@ -7,7 +7,7 @@
 		<title>reveal.js</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css" id="simple">
+		<link rel="stylesheet" href="css/theme/solarized.css" id="simple">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -24,10 +24,10 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section >
-                    <h5> Robust Adversarial Reiforcement Learning </h5>
-					<h6>Topics in Machine Learning</h6>
-					<p>Monsoon '17 - Course Project</p>
+				<section style="text-align:left">
+                    <h4> Robust Adversarial Reiforcement Learning </h4>
+                    <h5>Topics in Machine Learning,  <em>Monsoon '17</em></h5>
+                    <p>Course Project</p>
 					<p>
                         <ul>
                             <li>Binu Jasim T</li>
@@ -37,13 +37,111 @@
 					</p>
                     </script>
                 </section>
-				<section>Slide 2</section>
-                <section data-markdown>
+				<section>
+                <section data-markdown style="text-align:left">
+                    <h4> Problem </h4>
                     <script type="text/template">
-                        * The quick brown fox
-                        * Bullet 2
+                    ** Adapt RL agents to model differences. **
+                    >  e.g. a Robot  trained to walk on carpet generalize to walk on ice (Test scenario) 
+
+                    ** Transfer learning: Simulation $\rightarrow$ Real World **
+                    > It is expensive to train in the real world.
+
                     </script>
                 </section>
+                
+                </section>
+                <section data-markdown>
+                    <script type="text/template" style="text-align:left">
+                        # Intuitions
+
+                        * Train an agent for the worst case using a destabilizing adversary.
+                            * Drawn from friction and mass as something which exerts a disturbing force.
+                        * Pit a protagonist and adversary against each other so
+                        protagonist learns to generalize on unforeseen
+                        situations.
+
+
+                    </script>
+                </section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Modelling
+
+                        * Modelling errors as extra force in the system.
+                        * Protagonist v/s Adversary - **ZERO-SUM GAME**.
+                    </script>
+                </section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ### Previous Approaches
+
+                        * The targeted problems like Robot walking  are **continuous state space** problems
+                        * They can be solved using **Policy Optimization** techniques
+                        * Standard Batch Policy algorithms can be used.
+                            * REINFORCE
+                            * Natural Policy Gradients
+                            * TRPO : Trust Region Policy Optimization
+
+                        
+
+                    </script>
+                </section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Proposed Algorithm: RARL
+                        * Don't exhaustively modelling all possible differences.
+                        * Learn **a policy robust to differences** instead.
+                        * **Superpowers** to adversary 
+                            * Abilities to change enviroment parameters abruptly.
+                            * Makes action space of adversary $\neq$ action space of protagonist.
+
+                    </script>
+                </section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## What do we expect?
+                        Such a protagonist will perform well for robustness evaluations, and in general.
+                    </script>
+                </section>
+
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Formulation
+
+                        At every timestep $t$
+                        * Both players observe state $s_t$.
+                        * Takes actions 
+                            * $a_t^1 \sim  \mu(s_t) $ 
+                            * $a_t^2 \sim \nu(s_t) $.
+
+                        * The state transition is given by environment as:
+
+                        $$ s_{t+1} = P(s_t, a_t^1, a_t^2) $$
+                    </script>
+                </section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Formulation
+
+                        Each step of the MDP is given by
+
+                        $$ (s\_t, a\_t^1, a\_t^2, r\_t^1, r\_t^2, s\_{t+1}) $$
+
+                        Protagonist tries to maximize the following reward function:
+
+                        $$ 
+                        R^1 = E\_{
+                                s\_0 \sim \rho, 
+                                a^1 \sim \mu(s),
+                                a^2 \sim \nu(s)}
+                                {[\sum\_{t=0}^{T-1}{r^1(s, a^1, a^2)}]}
+                        $$
+
+                        The adversary on the other hand, tries to minimize the above.
+                    </script>
+                </section>
+
 			</div>
 		</div>
 
@@ -56,6 +154,7 @@
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
 				dependencies: [
+                   	{ src: 'plugin/math/math.js', async: true },
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },

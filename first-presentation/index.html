@@ -117,7 +117,7 @@
 
                         * The state transition is given by environment as:
 
-                        $$ s_{t+1} = P(s_t, a_t^1, a_t^2) $$
+                        $$ s\_{t+1} = P(s\_t, a\_t^1, a\_t^2) $$
                     </script>
                 </section>
                 <section data-markdown style="text-align:left">
@@ -141,7 +141,75 @@
                         The adversary on the other hand, tries to minimize the above.
                     </script>
                 </section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Algorithm
 
+
+                    </script>
+                </section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                    ## On Policy Optimization
+
+                    * Directly optimize policy instead of $V(s)$ or $Q(s, a)$.
+                    * Policy Optimization: State $\rightarrow$ Action Distribution
+
+                    $$ \max\_{\theta} 
+                            {\mathbb{E}[
+                                \sum
+                                \_{t=0} 
+                                ^{H}
+                                {R(s\_t) | \pi\_\theta}
+                               ]
+                            }
+                    $$
+
+                    * Policy Gradient:
+
+                    $$ 
+                    \begin{align}
+                    U(\theta) &= \sum
+                                    \_{\tau}
+                                    {P(\tau; \theta) R(\tau)} \\\\
+                    \nabla\_\theta U(\theta) &= \sum\_{\tau}{P(\tau; \theta) \nabla\_\theta \log P(\tau; \theta) R(\tau)}
+                    \end{align}
+                    $$
+
+                    </script>
+                </section>
+
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Implementation
+
+                        ### Building Blocks
+
+                        * **OpenAI gym** for environments.
+                        * **rllab** as deep RL framework aid.
+
+
+
+                    </script>
+                </section>
+
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Implementation 
+                        ### Inputs
+                        * An action is a vector containing values of forces.
+                            * Forces at multiple joints.
+                            * Forces have dimensions: 1D, 2D, 3D.
+                            * Concatenation of all the forces is the action.
+                            * A distribution predicting the action vector is learnt.
+                    </script>
+                </section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Implementation
+                        ### Outputs
+                    </script>
+                </section>
 			</div>
 		</div>
 

@@ -204,10 +204,33 @@
                             * A distribution predicting the action vector is learnt.
                     </script>
                 </section>
+                <section style="text-align:left">
+                    <h4> Example </h4>
+
+                    Inverted Pendulum. One 2D force as action.
+
+                    <img src="images/inverted_pendulum.png" alt="inverted-pendulum"></img>
+
+                </section>
                 <section data-markdown style="text-align:left">
                     <script type="text/template">
                         ## Implementation
                         ### Outputs
+
+                        In an episode, when we apply an action on the environment, we get:
+
+                        * The state of the environment
+                            * Velocities, Positions which determine the state.
+                            * Reward for the agent - protagonist or adversary is formulated based on state and episode.
+                                * Height
+                                * Distance covered.
+                                * Time staying alive.
+                    </script>
+                </section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Evaluation
+
                     </script>
                 </section>
 			</div>

@@ -25,8 +25,8 @@
 		<div class="reveal">
 			<div class="slides">
 				<section style="text-align:left">
-                    <h2> Robust Adversarial Reinforcement Learning </h2>
-                    <h5>Topics in Machine Learning, </h5>
+                    <h3> Robust Adversarial Reinforcement Learning </h3>
+                    <h5>Topics in Machine Learning </h5>
                     <p>Monsoon '17, Course Project</p>
 					<p>
                         <ul>
@@ -88,7 +88,8 @@
                 <section data-markdown style="text-align:left">
                     <script type="text/template">
                         ## Proposed Algorithm: RARL
-                        * Don't exhaustively modelling all possible differences.
+                        * RARL: Robust Adversarial Reinforcement Learning
+                        * Don't exhaustively model all possible differences.
                         * Learn **a policy robust to differences** instead.
                         * **Superpowers** to adversary 
                             * Abilities to change enviroment parameters abruptly.
@@ -175,6 +176,21 @@
 
                     </script>
                 </section>
+                
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        $$
+                        \begin{align}
+                        \nabla\_{\theta}U(\theta) &= \nabla\_{\theta} \sum\_{\tau} P(\tau;\theta)R(\tau) \\\\
+                         &= \sum\_{\tau} \frac{P(\tau;\theta)}{P(\tau;\theta)}\nabla\_{\theta}P(\tau;\theta)R(\tau)\\\\
+                         &= \sum\_{\tau}P(\tau;\theta)\nabla\_{\theta}log P(\tau;\theta)R(\tau) \\\\
+                         &= \nabla U(\theta) \approx \frac{1}{m} \sum\_{i=1}^{m} \nabla\_{\theta}log P(\tau^i;\theta)R(\tau^i)
+                        \end{align}
+                        $$
+
+                        Hence we can approximate the remaining gradients from the above approximation.
+                    </script>
+                </section>
 
                 <section data-markdown style="text-align:left">
                     <script type="text/template">
@@ -207,7 +223,7 @@
                         ## Implementation
                         ### Inputs
 
-                        A neural network models the required predictive distribution of $\pi(a |s) $.
+                        A neural network models the required distribution of $\pi(a |s) $.
 
                         We train based on the rewards the agent obtain, using Policy Optimizer.
 
@@ -215,12 +231,11 @@
                     </script>
                 </section>
                 <section style="text-align:left">
-                    <h4> Example </h4>
-
-                    <p> Inverted Pendulum. </p>
+                    <h4> Example: Inverted Pendulum </h4>
                     <ul>
+                        <li> State Space: 4D position, velocity for both cart and pendulum. </li>
                         <li> Protagonist: One 1D force as action. </li>
-                        <li> Adversary: One 2D force as action. </li>
+                        <li> Adversary: One 2D force on center of pendulum as action. </li>
                     </ul>
 
                     <img src="images/inverted_pendulum.png" alt="inverted-pendulum"></img>
@@ -230,7 +245,14 @@
                 <section style="text-align:left">
                     <h4> Example </h4>
 
-                    <p> Other examples </p>
+                    <p> More parameters illustrated: </p>
+                    <img src="images/process.png" alt="other examples"></img>
+
+                </section>
+                <section style="text-align:left">
+                    <h4> Example </h4>
+
+                    <p> Other examples: </p>
                     <img src="images/other_examples.png" alt="other examples"></img>
 
                 </section>

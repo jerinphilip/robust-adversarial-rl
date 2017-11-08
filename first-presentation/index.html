@@ -146,6 +146,7 @@
                     <img src="images/algo.png" alt="algorithm" width="50%"> </img>
                 </section>
 
+                <section>
                 <section data-markdown style="text-align:left">
                     <script type="text/template">
                     ## Policy Optimization
@@ -183,13 +184,14 @@
                         \begin{align}
                         \nabla\_{\theta}U(\theta) &= \nabla\_{\theta} \sum\_{\tau} P(\tau;\theta)R(\tau) \\\\
                          &= \sum\_{\tau} \frac{P(\tau;\theta)}{P(\tau;\theta)}\nabla\_{\theta}P(\tau;\theta)R(\tau)\\\\
-                         &= \sum\_{\tau}P(\tau;\theta)\nabla\_{\theta}log P(\tau;\theta)R(\tau) \\\\
-                         &= \nabla U(\theta) \approx \frac{1}{m} \sum\_{i=1}^{m} \nabla\_{\theta}log P(\tau^i;\theta)R(\tau^i)
+                         &= \sum\_{\tau}P(\tau;\theta)\nabla\_{\theta}\log P(\tau;\theta)R(\tau) \\\\
+                         &= \nabla U(\theta) \approx \frac{1}{m} \sum\_{i=1}^{m} \nabla\_{\theta}\log P(\tau^i;\theta)R(\tau^i)
                         \end{align}
                         $$
 
                         Hence we can compute the remaining gradients to backpropagate starting from the above approximation.
                     </script>
+                </section>
                 </section>
 
                 <section data-markdown style="text-align:left">

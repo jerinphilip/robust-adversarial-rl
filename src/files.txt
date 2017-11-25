@@ -1,0 +1,11 @@
+mv env src/
+mv files.txt src/
+mv getid_linux src/
+mv gym-adv src/
+mv mjkey.txt src/
+mv mjpro131 src/
+mv mjpro131_linux.zip src/
+mv mjpro150 src/
+mv mjpro150_linux.zip src/
+mv mujoco-py src/
+mv rllab-adv src/

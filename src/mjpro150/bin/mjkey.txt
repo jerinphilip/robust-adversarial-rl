@@ -1,0 +1,20 @@
+MuJoCo Pro Personal license activation key, number 37429, type 6.
+
+Issued to Jerin Philip <jerin.philip@research.iiit.ac.in>.
+
+Expires October 22, 2018.
+
+This file activates MuJoCo Pro on a single computer with id:
+LINUX_65a0md_7fbvebb7561e480afe5d0bb656b747bc494
+
+Do not modify this file. Its entire content, including the
+plain text section, is used by the activation manager.
+
+5119dbd6032fbd63148d5c23eb534a06dd925202dd07c8c90439e1cb315f5f09
+7b13fb1311b258d58df7afb8c209e3cc20a1baf8aa1e58e581a9f9de67975b39
+cc71df6f9a568900246659384cef881ace47f7eb00633069ebd53527873fb83e
+7805ae2ba88d0ce98ccf0782d319d0d253403b0f7feaa864245b80eeca13721b
+b96d701956066ae1dfd3f2365df1bd40152223c61cb44fb4771163a661e11793
+3c905661b0978800df6e1bbde8a02d3c4474251e48b74d2960d55e3b629387cc
+f5dbbdf8ba3628b9024527b6e2b3e16009703962aa9691871ff55efc3d8293d7
+92bc468193f051baf48fac381d255d299c3608fe858f212bb2f3adf714a87f08

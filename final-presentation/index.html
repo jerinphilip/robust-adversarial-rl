@@ -37,6 +37,7 @@
 					</p>
                     </script>
                 </section>
+                <section>
                 <section data-markdown style="text-align:left">
                     <h4> Problem </h4>
                     <script type="text/template">
@@ -61,6 +62,7 @@
 
 
                     </script>
+                </section>
                 </section>
                 
                 <!--
@@ -146,9 +148,26 @@
                 </section>
                 </section>
 
-                <section style="text-align:left">
-                    <h2> Algorithm </h2>
-                    <img src="images/algo.png" alt="algorithm" width="50%"> </img>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                    ## Algorithm 
+
+                    ```py
+
+                    policy = {
+                        protagonist: GaussianMLP,
+                        adversary: GaussianMLP or Random or Uniform or Constant
+                    }
+                    def train(environment, policy):
+                        for i in range(iterations):
+                            state, actions, rewards = generate-trajectory(environments, policy)
+                            policy.protagonist.optimize(state, actions, rewards)
+
+                            state, actions, rewards = generate-trajectory(environments, policy)
+                            policy.adversary.optimize(state, actions, rewards)
+
+                    ```
+                    </script>
                 </section>
 
                 <section>
@@ -394,6 +413,19 @@
                     mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
                     config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
                 },
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                width: 1920,
+                height: 1080,
+
+                // Factor of the display size that should remain empty around the content
+                margin: 0.1,
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.1,
+                maxScale: 1.5
 
 			});
 		</script>

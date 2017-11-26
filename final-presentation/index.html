@@ -146,6 +146,19 @@
                         The adversary on the other hand, tries to minimize the above.
                     </script>
                 </section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Minimax Formulation
+
+                        \begin{align}
+                        R\_1^* &= \min\_{\mu}{\max\_{\nu}{R\_1(\mu, \nu)}} \\\\
+                        &= \max\_{\nu}{\min\_{\mu}{R\_1(\mu, \nu)}}
+                        \end{align}
+
+                        * Solving the above is computationally intensive.
+                        * Focus on learning stationary policies.
+                    </script>
+                </section>
                 </section>
 
                 <section data-markdown style="text-align:left">
@@ -255,7 +268,7 @@
 
                     <section data-markdown style="text-align:left">
                         <script type="text/template">
-                            ### Imporance Sampling Perspective
+                            ### Importance Sampling Perspective
                             \begin{align}
                             L^{IS}(\theta) &= \mathbb{E\_{t}}{[\frac{\log \pi(a\_t | s\_t)}{\log \pi\_{\text{old}}(a\_t | s\_t)}\hat{A}]}
                             \end{align}
@@ -269,11 +282,28 @@
                     </section>
                     <section data-markdown style="text-align:left">
                         <script type="text/template">
+                        ### TRPO
+
+                        \begin{align}
+                        \text{maximize} & & \mathbb{E\_{t}}{[\frac{\log \pi(a\_t | s\_t)}{\log \pi\_{\text{old}}(a\_t | s\_t)}\hat{A}]} \\\\
+                        \text{subject to}&  & \mathbb{E\_{t}}[KL(\pi, \pi\_{\text{old}})] \le \delta 
+                        \end{align}
+
+                        * KL Divergence used here to constrain size of the update.
+                        * Approximation of the unconstrained problem forms basis of Natural Policy Gradient.
                         </script>
                     </section>
                 </section>
 
                 <section>
+                <section style="text-align:left">
+                    <h2> Gaussian MLP Policy </h2>
+                    <img src="images/network.svg" alt="inverted-pendulum"></img>
+                </section>
+
+                <section>
+                </section>
+                    <!--
                 <section data-markdown style="text-align:left">
                     <script type="text/template">
                         ## Implementation
@@ -351,6 +381,7 @@
                             * Time staying alive.
                     </script>
                 </section>
+                -->
                 </section>
                 <section>
                 <section data-markdown style="text-align:left">

@@ -7,7 +7,7 @@
 		<title>reveal.js</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/solarized.css" id="simple">
+		<link rel="stylesheet" href="css/theme/simple.css" id="simple">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -39,74 +39,38 @@
                 </section>
                 <section>
                 <section data-markdown style="text-align:left">
-                    <h4> Problem </h4>
                     <script type="text/template">
-                    ** Adapt RL agents to model differences. **
-                    >  e.g. a Robot  trained to walk on carpet generalize to walk on ice (Test scenario) 
+                    ## Problem
+                    **Can a robot trained under normal conditions walk in slippery ice?**
+                    * *Adapt RL agents to model differences.*
 
-                    ** Transfer learning: Simulation $\rightarrow$ Real World **
-                    > It is expensive to train in the real world.
+                    **How well can the model's learning be transferred
+                    to real world?**
+
+                    ---
+
+                    ## Intuitions
+
+                    * Train an agent for the worst case in presense of a destabilizing adversary.
+
 
                     </script>
                 </section>
                 
-                <section data-markdown style="text-align:left">
-                    <script type="text/template">
-                        ## Intuitions
-
-                        * Train an agent for the worst case using a destabilizing adversary.
-                            * Drawn from friction and mass as something which exerts a disturbing force.
-                        * Pit a protagonist and adversary against each other so
-                        protagonist learns to generalize on unforeseen
-                        situations.
-
-
-                    </script>
-                </section>
-                </section>
                 
-                <!--
                 <section data-markdown style="text-align:left">
                     <script type="text/template">
-                        ## Modelling
-
-                        * Modelling errors as extra force in the system.
-                        * Protagonist v/s Adversary - **ZERO-SUM GAME**.
-                    </script>
-                </section>
-                <section data-markdown style="text-align:left">
-                    <script type="text/template">
-                        ### Previous Approaches
-
-                        * The targeted problems like Robot walking  are **continuous state space** problems
-                        * They can be solved using **Policy Optimization** techniques
-                        * Standard Batch Policy algorithms can be used.
-                            * REINFORCE
-                            * Natural Policy Gradients
-                            * TRPO : Trust Region Policy Optimization
-
-                        
-
-                    </script>
-                </section>
-                -->
-                <section data-markdown style="text-align:left">
-                    <script type="text/template">
-                        ## Proposed Algorithm: RARL
-                        * RARL: Robust Adversarial Reinforcement Learning
+                        ## Proposed Algorithm 
+                        ### Robust Adversarial Reinforcement Learning
                         * Don't exhaustively model all possible differences.
                         * Learn **a policy robust to differences** instead.
+
                         * **Superpowers** to adversary 
                             * Abilities to change enviroment parameters abruptly.
                             * Makes action space of adversary $\neq$ action space of protagonist.
 
                     </script>
                 </section>
-                <section data-markdown style="text-align:left">
-                    <script type="text/template">
-                        ## What do we expect?
-                        Such a protagonist will perform well for robustness evaluations, and in general.
-                    </script>
                 </section>
 
                 <section>
@@ -157,6 +121,9 @@
 
                         * Solving the above is computationally intensive.
                         * Focus on learning stationary policies.
+                        * Alternate: Monte Carlo Tree Search
+                            * Estimates for computationally feasible
+                            depth.
                     </script>
                 </section>
                 </section>
@@ -171,13 +138,16 @@
                         protagonist: GaussianMLP,
                         adversary: GaussianMLP or Random or Uniform or Constant
                     }
+
+                    optimize = REINFORCE or NaturalPolicyOptimizer or TRPO
+
                     def train(environment, policy):
                         for i in range(iterations):
-                            state, actions, rewards = generate-trajectory(environments, policy)
-                            policy.protagonist.optimize(state, actions, rewards)
+                            states, actions, rewards = monte-carlo-rollout(environments, policy)
+                            optimize(policy[protagonist], states, actions, rewards)
 
-                            state, actions, rewards = generate-trajectory(environments, policy)
-                            policy.adversary.optimize(state, actions, rewards)
+                            states, actions, rewards = monte-carlo-rollout(environments, policy)
+                            optimize(policy[adversary], states, actions, rewards)
 
                     ```
                     </script>
@@ -200,6 +170,11 @@
                                    ]
                                 }
                         $$
+
+                        * Methods:
+                            * REINFORCE / Vanilla Policy Gradient
+                            * Natural Policy Gradient
+                            * Trust Region Policy Optimization
                         </script>
                     </section>
                     <section data-markdown style="text-align:left">
@@ -219,7 +194,8 @@
 
                         $$
                         \begin{align}
-                        \textbf{w}\_{\theta} &= \textbf{w}\_{\theta\_{old}} - \alpha \nabla\_\theta U(\theta)
+                        \textbf{w}\_{\theta} &=
+                        \textbf{w}\_{\theta\_{old}} - \alpha \nabla\_\theta (\dots) 
                         \end{align}
                         $$
 
@@ -282,25 +258,89 @@
                     </section>
                     <section data-markdown style="text-align:left">
                         <script type="text/template">
-                        ### TRPO
+                        ### TRPO: Trust Region Policy Optimization
 
                         \begin{align}
                         \text{maximize} & & \mathbb{E\_{t}}{[\frac{\log \pi(a\_t | s\_t)}{\log \pi\_{\text{old}}(a\_t | s\_t)}\hat{A}]} \\\\
-                        \text{subject to}&  & \mathbb{E\_{t}}[KL(\pi, \pi\_{\text{old}})] \le \delta 
+                        \text{subject to}&  & \mathbb{E\_{t}}[D\_{KL}(\pi, \pi\_{\text{old}})] \le \delta 
                         \end{align}
 
-                        * KL Divergence used here to constrain size of the update.
-                        * Approximation of the unconstrained problem forms basis of Natural Policy Gradient.
+                        * KL-Divergence used here to constrain size of the update.
+
+                        \begin{align}
+                        \text{maximize} & & \mathbb{E\_{t}}{
+                            [\frac
+                                {\log \pi(a\_t | s\_t)}
+                                {\log \pi\_{\text{old}}(a\_t | s\_t)}
+                                \hat{A}]} 
+                            & - \beta( \mathbb{E\_{t}}[D\_{KL}(\pi, \pi\_{\text{old}})] - \delta )
+                        \end{align}
+
                         </script>
                     </section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ### Natural Policy Gradient
+                        * Approximation of the unconstrained formulation
+                        using lagrangian forms basis.
+                        \begin{align}
+                        \text{maximize} & & & \mathbb{E\_{t}}{ [\frac {\log \pi(a\_t | s\_t)} {\log \pi\_{\text{old}}(a\_t | s\_t)} \hat{A}]}  - \beta( \mathbb{E\_{t}}[D\_{KL}(\pi, \pi\_{\text{old}})] - \delta ) \\\\
+                            & & & g \cdot (\theta - \theta\_{\text{old}}) -
+                            \frac{\beta}{2} F(\theta -
+                            \theta\_{\text{old}})
+                        \end{align}
+
+                        Where $g$ is a first order approximation of
+                        expectation and $F$ is a second order approximation of
+                        $D\_{KL}$.
+
+                        Solution:
+
+                        $$ \theta - \theta\_{\text{old}} =
+                        \frac{1}{\beta}\mathbf{F}^{-1}g $$
+
+                        where $\mathbf{F}$ is the **Fisher Information matrix**.
+
+
+                    </script>
+                </section>
                 </section>
 
                 <section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Implementation
+
+                        * Modified gym to enable superpowered
+                        adversaries. 
+                        * Modified rllab optimizers (`TRPO`).
+                        * `GaussianMLPPolicy` in Lasagne.
+                            * Dimensions: [dim(state), 100, 100, 100, dim(action)]
+
+                    </script>
+                </section>
                 <section style="text-align:left">
                     <h2> Gaussian MLP Policy </h2>
                     <img src="images/network.svg" alt="inverted-pendulum"></img>
                 </section>
 
+
+                <section style="text-align:left">
+                    <h4> InvertedPendulum: Parameters Illustrated </h4>
+
+                    <img src="images/process.png" alt="other examples"></img>
+
+                </section>
+                <section style="text-align:left">
+                    <h4> Additional Agents </h4>
+
+                    <img src="images/other_examples.png" alt="other examples"></img>
+
+
+                    <p> No adversarial version of ant - therefore
+                    discarded. </p>
+
+                </section>
                 <section>
                 </section>
                     <!--
@@ -418,6 +458,12 @@
                     </section>
                     <section>
                         <h3> Random Policy </h3>
+                    </section>
+                    <section style="text-align:left">
+                        ### Stats
+
+                        #### Running Time
+
                     </section>
                 </section>
 			</div>

@@ -1,10 +1,11 @@
-from rllab.algos.trpo import TRPO
+from rllab.algos.vpg import VPG
 from rllab.baselines.linear_feature_baseline import LinearFeatureBaseline
 from rllab.envs.gym_env import GymEnv
 from rllab.envs.normalized_env import normalize
 from rllab.policies.gaussian_mlp_policy import GaussianMLPPolicy
 from rllab.policies.random_uniform_control_policy import RandomUniformControlPolicy
 from rllab.policies.constant_control_policy import ConstantControlPolicy
+from rllab.optimizers.penalty_lbfgs_optimizer import PenaltyLbfgsOptimizer
 from IPython import embed
 import matplotlib.pyplot as plt
 import rllab.misc.logger as logger
@@ -60,11 +61,14 @@ rand_test_rew_summary = []
 step_test_rew_summary = []
 rand_step_test_rew_summary = []
 adv_test_rew_summary = []
-save_prefix = 'BASELINE-env-{}_{}_Exp{}_Itr{}_BS{}_Adv{}_stp{}_lam{}'.format(env_name, adv_name, n_exps, n_itr, batch_size, adv_fraction, step_size, gae_lambda)
-save_dir = os.environ['HOME']+'/results/baselines/binu/'
+save_prefix = 'REINFORCE-BASELINE-env-{}_{}_Exp{}_Itr{}_BS{}_Adv{}_stp{}_lam{}'.format(env_name, adv_name, n_exps, n_itr, batch_size, adv_fraction, step_size, gae_lambda)
+save_dir ='./binu'
 fig_dir = 'figs'
-save_name = save_dir+'/'+save_prefix+'.p'
+save_name = save_dir+'/'+save_prefix
 fig_name = fig_dir+'/'+save_prefix+'.png'
+
+optimizer_args = dict()
+optimizer = PenaltyLbfgsOptimizer(**optimizer_args)
 
 for ne in range(n_exps):
     ## Environment definition ##
@@ -88,11 +92,13 @@ for ne in range(n_exps):
     from rllab.sampler import parallel_sampler
     parallel_sampler.initialize(n_process)
     if adv_name=='no_adv':
-        pro_algo = TRPO(
+        pro_algo = VPG(
             env=env,
             pro_policy=pro_policy,
+            policy=pro_policy,
             adv_policy=zero_adv_policy,
             pro_baseline=pro_baseline,
+            baseline=pro_baseline,
             adv_baseline=pro_baseline,
             batch_size=batch_size,
             max_path_length=path_length,
@@ -100,6 +106,7 @@ for ne in range(n_exps):
             discount=0.995,
             gae_lambda=gae_lambda,
             step_size=step_size,
+           # optimizer=optimizer,
             is_protagonist=True
         )
 
@@ -139,7 +146,7 @@ for ne in range(n_exps):
                          'rand_step_test': rand_step_test_rew_summary,
                          'iter_save': ni,
                          'exp_save': ne,
-                         'adv_test': adv_test_rew_summary}, open(save_name+'.temp','wb'))
+                         'adv_test': adv_test_rew_summary}, open(save_name+str(ni)+'.temp','wb'))
 
     ## Shutting down the optimizer ##
     pro_algo.shutdown_worker()
@@ -156,6 +163,6 @@ pickle.dump({'args': args,
              'rand_test': rand_test_rew_summary,
              'step_test': step_test_rew_summary,
              'rand_step_test': rand_step_test_rew_summary,
-             'adv_test': adv_test_rew_summary}, open(save_name,'wb'))
+             'adv_test': adv_test_rew_summary}, open(save_name+'.p','wb'))
 
 logger.log('\n\n\n#### DONE ####\n\n\n')

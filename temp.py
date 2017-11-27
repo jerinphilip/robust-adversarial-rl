@@ -17,9 +17,9 @@ env = gym.make('InvertedPendulumAdv-v1')
 #env.directory = "./"
 #print(env.directory)
 
-for i_episode in range(20000):
+for i_episode in range(20):
     observation = env.reset()
-    for t in range(10000):
+    for t in range(10):
         env.render()
         print(observation)
         action = env.action_space.sample()

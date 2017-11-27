@@ -12,39 +12,26 @@ class VPG(BatchPolopt, Serializable):
     """
     Vanilla Policy Gradient.
     """
-
-    def __init__(
-            self,
-            env,
-            policy,
-            baseline,
-            optimizer=None,
-            optimizer_args=None,
-            **kwargs):
-        Serializable.quick_init(self, locals())
+    def __init__(self, optimizer=None, optimizer_args=None, step_size=0.01, truncate_local_is_ratio=None, **kwargs):
         if optimizer is None:
-            default_args = dict(
-                batch_size=None,
-                max_epochs=1,
-            )
             if optimizer_args is None:
-                optimizer_args = default_args
-            else:
-                optimizer_args = dict(default_args, **optimizer_args)
+                optimizer_args = dict()
             optimizer = FirstOrderOptimizer(**optimizer_args)
         self.optimizer = optimizer
-        self.opt_info = None
-        super(VPG, self).__init__(env=env, policy=policy, baseline=baseline, **kwargs)
-
+        self.step_size = step_size
+        self.truncate_local_is_ratio = truncate_local_is_ratio
+        super(VPG, self).__init__(**kwargs)
+        
     @overrides
     def init_opt(self):
         is_recurrent = int(self.policy.recurrent)
+        
 
         obs_var = self.env.observation_space.new_tensor_variable(
             'obs',
             extra_dims=1 + is_recurrent,
         )
-        action_var = self.env.action_space.new_tensor_variable(
+        action_var = self.env.pro_action_space.new_tensor_variable(
             'action',
             extra_dims=1 + is_recurrent,
         )

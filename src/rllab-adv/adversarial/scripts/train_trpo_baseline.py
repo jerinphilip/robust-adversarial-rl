@@ -34,6 +34,7 @@ parser.add_argument('--n_process', type=int, default=16, help='Number of threads
 parser.add_argument('--adv_fraction', type=float, default=1.0, help='DOESNT MATTER')
 parser.add_argument('--step_size', type=float, default=0.01, help='step size for learner')
 parser.add_argument('--gae_lambda', type=float, default=0.97, help='gae_lambda for learner')
+parser.add_argument('--folder', type=str, default=os.environ['HOME']+'/results/trpo_baseline', help='folder to save result in')
 
 args = parser.parse_args()
 
@@ -61,7 +62,7 @@ step_test_rew_summary = []
 rand_step_test_rew_summary = []
 adv_test_rew_summary = []
 save_prefix = 'BASELINE-env-{}_{}_Exp{}_Itr{}_BS{}_Adv{}_stp{}_lam{}'.format(env_name, adv_name, n_exps, n_itr, batch_size, adv_fraction, step_size, gae_lambda)
-save_dir = os.environ['HOME']+'/results/baselines'
+save_dir = args.folder
 fig_dir = 'figs'
 save_name = save_dir+'/'+save_prefix+'.p'
 fig_name = fig_dir+'/'+save_prefix+'.png'

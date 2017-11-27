@@ -28,7 +28,9 @@ for i,l in reversed(list(enumerate(L))):
     if 'temp' in l or '.p' not in l:
         del(L[i])
     else:
+        print(os.path.join(savename,l))
         res_D = pickle.load(open(os.path.join(savename,l),'rb'))
+
         const_test_rew_summary.append(res_D['zero_test'][0])
         print(os.path.join(savename,l))
         print(res_D['zero_test'][0][-1])

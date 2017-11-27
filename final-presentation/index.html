@@ -37,6 +37,20 @@
 					</p>
                     </script>
                 </section>
+
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        # Outline
+
+                        ### 1. Problem Statement
+                        ### 2. Formulation
+                        ### 3. Theory: Policy Gradients
+                        ### 4. Implementation Specifics
+                        ### 5. Results
+                        ### 6. Demos and Stats
+
+                    </script>
+                </section>
                 <section>
                 <section data-markdown style="text-align:left">
                     <script type="text/template">
@@ -120,14 +134,24 @@
                         \end{align}
 
                         * Solving the above is computationally intensive.
-                        * Focus on learning stationary policies.
-                        * Alternate: Monte Carlo Tree Search
-                            * Estimates for computationally feasible
-                            depth.
+                        * Searching the tree using $\alpha - \beta$
+                        pruning is infeasible.
                     </script>
                 </section>
-                </section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Workaround
+                        * Focus on learning stationary policies.
+                        * Alternate: Monte Carlo Tree Search
+                            * Episode rollouts with limited depth.
+                            * Estimates for computationally feasible
+                            depth.
+                            * Sample multiple times and use the estimate
+                            mean value - used for policy gradients.
 
+
+                    </script>
+                </section>
                 <section data-markdown style="text-align:left">
                     <script type="text/template">
                     ## Algorithm 
@@ -152,6 +176,8 @@
                     ```
                     </script>
                 </section>
+                </section>
+
 
                 <section>
                     <section data-markdown style="text-align:left">
@@ -311,7 +337,7 @@
                     <script type="text/template">
                         ## Implementation
 
-                        * Modified gym to enable superpowered
+                        * Modified gym environements to enable superpowered
                         adversaries. 
                         * Modified rllab optimizers (`TRPO`).
                         * `GaussianMLPPolicy` in Lasagne.
@@ -337,8 +363,8 @@
                     <img src="images/other_examples.png" alt="other examples"></img>
 
 
-                    <p> No adversarial version of ant - therefore
-                    discarded. </p>
+                    <!-- <p> No adversarial version of ant - therefore
+                        discarded. </p> -->
 
                 </section>
                 <section>
@@ -459,7 +485,7 @@
                     <section>
                         <h3> Random Policy </h3>
                     </section>
-                    <section style="text-align:left">
+                    <section data-markdown style="text-align:left">
                         ### Stats
 
                         #### Running Time

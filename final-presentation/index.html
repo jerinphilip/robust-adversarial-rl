@@ -337,9 +337,30 @@
                     <script type="text/template">
                         ## Implementation
 
-                        * Modified gym environements to enable superpowered
+                        * OpenAI Gym.
+
+                        ```py
+
+                        import gym
+
+                        policy = GaussianMLPPolicy()
+                        environment = gym.env('InvertedPendulumAdv-v1')
+                        state = gym.make() # Returns start state.
+
+                        for t in episode:
+                            action = policy.get_action(state)
+                            state = environment.step(action)
+
+                        ```
+
+                    </script>
+                </section>
+                <section data-markdown style="text-align:left">
+                    <script type="text/template">
+                        ## Implementation
+                        * Modified gym environments to enable superpowered
                         adversaries. 
-                        * Modified rllab optimizers (`TRPO`).
+                        * Modified rllab optimizers (`TRPO`, `REINFORCE`).
                         * `GaussianMLPPolicy` in Lasagne.
                             * Dimensions: [dim(state), 100, 100, 100, dim(action)]
 
@@ -534,12 +555,23 @@
                         * Friction vs Rewards
                     </script>
                 </section>
-                <section data-markdown style="text-align:left">
-                    <script type="text/template">
-                        <img
-                        src="images/results/hopper_robustness.png"></img>
-                    </script>
+
+                <!--
+                <section style="text-align:left">
+                    <div>
+                    <img width="49%" src="images/results/hopper_robustness.png"></img>
+                    <img width="49%"src="images/results/hopper_robustness.png"></img>
+                    </div>
                 </section>
+                -->
+                <section style="text-align:left">
+                    <div>
+                    <img width="49%" src="images/results/Walker2d - Robust.png"></img>
+                    <img width="49%"src="images/results/Waler Robust.png"></img>
+                    </div>
+                </section>
+
+
                 </section>
                 <section>
                     <section style="text-align:left">
@@ -551,13 +583,17 @@
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/qYVPmaHu9no?rel=0" frameborder="0" allowfullscreen></iframe>
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/DzNvJ3QjE8Q?rel=0" frameborder="0" allowfullscreen></iframe>
                     </section>
-                    <section>
-                        <h3> Random Policy </h3>
-                    </section>
                     <section data-markdown style="text-align:left">
                         ### Stats
 
-                        #### Running Time
+
+                        | Model             | Runtime  | Episodes | Iterations per Episode |
+                        | ---               | ---      | ---      | ----                   |
+                        | Swimmer           | 2 hours  | 3        | 100                    |
+                        | Inverted Pendulum | 2 hours  | 3        | 500                    |
+                        | Hopper            | 8 hours  | 3        | 500                    |
+                        | Walker2d          | 8 hours  | 3        | 500                    |
+                        | HalfCheetah       | 14 hours | 3        | 600                    |
 
                     </section>
                 </section>
